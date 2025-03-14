@@ -18,7 +18,7 @@ import {
 } from '../utils/timeSlotHelper';
 import User, { IUser } from '../models/User';
 import { calculateTimeDifference } from '../utils/timeDifference';
-import sendMail from '../config/brevo';
+//import sendMail from '../config/brevo';
 
 // get available time
 export const getAvailableTime = async (
@@ -27,6 +27,7 @@ export const getAvailableTime = async (
   next: NextFunction
 ) => {
   const { selectedDate, facilityName } = req.body;
+
   try {
     if (!selectedDate || !facilityName) {
       return res
@@ -53,6 +54,15 @@ export const getAvailableTime = async (
     if (!facility) {
       return res.status(404).json({ error: 'Facility not found' });
     }
+    const facilityNameToDisplay = await Facility.findOne({
+      $or: [
+        { 'type.en': facilityName },
+        { 'type.fi': facilityName },
+        { 'type.sv': facilityName },
+      ],
+    });
+    if (!facilityNameToDisplay)
+      throw new NotFoundError('FacilityUnit is not found');
 
     const facilityIds = facility.map(
       (faci) => faci._id
@@ -86,8 +96,12 @@ export const getAvailableTime = async (
       facilityIds
     );
 
-
-    res.status(200).json({ availableTime: filteredSlots });
+    res
+      .status(200)
+      .json({
+        availableTime: filteredSlots,
+        facilityDisplayName: facilityNameToDisplay.type,
+      });
   } catch (error) {
     next(new BadRequestError('Invalid Request', error));
   }
@@ -137,7 +151,6 @@ export const getAvailableCourt = async (
         );
       });
     });
-
 
     res.status(200).json({ availableCourts });
   } catch (error) {
