@@ -13,7 +13,7 @@ The **SportsLot API** is a backend system built with **Node.js, Express, and Mon
 - **Role-Based Access Control**: Restricts admin routes and secures user-specific data.
 
 ## Tech Stack
-- **Backend**: Node.js, Express.js
+- **Backend**: Node.js, Express.js, TypeScript
 - **Database**: MongoDB, Mongoose
 - **Authentication**: Passport.js (Google, Email-password)
 - **Payment Processing**: Stripe
@@ -23,8 +23,8 @@ The **SportsLot API** is a backend system built with **Node.js, Express, and Mon
 ## Installation
 1. **Clone the repository**
    ```sh
-   git clone https://github.com/mahmudulhasan5050/sports_api.git
-   cd sports_api
+   https://github.com/mahmudulhasan5050/sports_api_lang
+   cd sports_api_lang
    ```
 2. **Install dependencies**
    ```sh
@@ -79,9 +79,6 @@ The **SportsLot API** is a backend system built with **Node.js, Express, and Mon
 - `POST /api/v1/booking` - Create booking by admin
 
 - `GET /api/v1/facilityunit` - Get all facility units
-- `POST /api/v1/facilityunit` - Create unit (Example: Tennis or Badminton)
-- `POST /api/v1/facilityunit/:facilityUnitId` - Update facility unit information
-- `DELETE /api/v1/facilityunit/:facilityUnitId` - Delete facility unit
 
 - `GET /api/v1/facility` - Get all facility details (One facility can have several courts)
 - `GET /api/v1/facility/:facilityId` - Get a facility information by Id
